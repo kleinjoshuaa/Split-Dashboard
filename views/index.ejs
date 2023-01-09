@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible"
+		content="IE=edge">
+	<meta name="viewport"
+		content="width=device-width,
+				initial-scale=1.0">
+	<title>Split Dashboard</title>
+	<link rel="stylesheet"
+		href="/css/styles.css">
+
+    <script src="/js/script.js"></script>
+
+</head>
+
+<body>
+
+	<header>
+
+		<div class="logosec">
+			<div class="logo">Split Dashboard</div>
+
+
+		</div>
+
+
+
+	</header>
+
+	<div class="main-container">
+		<div class="navcontainer">
+			<nav class="nav">
+				<div class="nav-upper-options">
+					<div id="splits-selected" class="nav-option selected-option" onclick="makeSelected('splits')">
+
+						<h3> Splits</h3>
+					</div>
+
+					<div id="segments-selected" class=" nav-option" onclick="makeSelected('segments')">
+
+						<h3> Segments</h3>
+					</div>
+
+					<div id="users-selected" class="nav-option" onclick="makeSelected('users')">
+
+						<h3> Users and Groups</h3>
+					</div>
+
+
+					<div id="cr-selected" class="nav-option" onclick="makeSelected('cr')">
+
+						<h3> Open CRs </h3>
+					</div>
+
+					<div id="tt-selected" class="nav-option" onclick="makeSelected('tt')">
+						
+						<h3> TrafficTypes and Attributes</h3>
+					</div>
+
+
+
+
+
+				</div>
+			</nav>
+		</div>
+
+        <div id="tt-main" class="main hide">
+
+        </div>
+
+        <div id="cr-main" class="main hide">
+
+        </div>
+
+        <div id="users-main" class="main hide">
+
+
+        </div>
+
+        <div id="segments-main" class="main hide">
+
+        </div>
+
+		<div id="splits-main" class="main">
+
+
+		
+	</div>
+
+
+</body>
+</html>
