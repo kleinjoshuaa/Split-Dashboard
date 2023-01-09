@@ -25,7 +25,8 @@ This is a starting point - some enhancements will be left as exercises for the r
   5. Add the ability to kill splits from this screen
   6. Add a refresh button to refresh the data
   7. Link back to Split's admin console for more information on the row items in the tables
-  8. add tests
+  8. Add tests
+  9. Add aggregate statistics
   
  The above are just some ideas to expand upon this to make it useful for your use case. Enjoy!
   
