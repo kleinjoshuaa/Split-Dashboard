@@ -1,14 +1,6 @@
-// let menuicn = document.querySelector(".menuicn");
-// let nav = document.querySelector(".navcontainer");
-
-// const { toNamespacedPath } = require("path");
-
-// menuicn.addEventListener("click",()=>
-// {
-// 	nav.classList.toggle("navclose");
-// })
 
 updateSplits();
+
 
 function makeSelected(option) {
   hideSelected();
@@ -154,7 +146,7 @@ function updateSplits() {
                     let dataRow = document.createElement("tr");
 
                     let name = document.createElement("td");
-                    name.innerText = row.name;
+                    name.innerHTML = `<a href="https://app.split.io/org/${ORG}/ws/${ws.id}/splits/${row.id}/" target="_blank" rel="noopener noreferrer"> ${row.name} </a>`;
                     dataRow.appendChild(name);
 
                     let desc = document.createElement("td");
@@ -231,7 +223,7 @@ function updateTT() {
                 let div = document.getElementById("tt-main");
 
                 let wsElem = document.createElement("h3");
-                wsElem.innerText = ws.name + ": TrafficTypes";
+                wsElem.innerText = ws.name ;
 
                 div.appendChild(wsElem);
 
@@ -264,11 +256,10 @@ function updateTT() {
                       .then((attres) => {
                         let dataRow = document.createElement("tr");
                         let name = document.createElement("td");
-                        name.innerText = row.name;
+                        name.innerHTML = `<a href="https://app.split.io/org/${ORG}/ws/${ws.id}/admin/traffic-types/${row.id}/properties/" target="_blank" rel="noopener noreferrer"> ${row.name} </a>`
                         dataRow.appendChild(name);
                         let attrs = attres.data;
-						//console.log('looking at attrs')
-                        //console.log(attres.status, attres.data);
+
                         let attr = document.createElement("td");
 
                         attr.innerText = attrs
@@ -313,6 +304,14 @@ function updateUsers() {
     },
     redirect: "follow",
   };
+  fetch("/workspaces", requestOptions).then((response) =>
+  response
+    .json()
+    .then((data) => ({
+      data: data,
+      status: response.status,
+    }))
+    .then((ws) => {
   fetch("/users", requestOptions).then((response) =>
     response
       .json()
@@ -346,7 +345,7 @@ function updateUsers() {
               let usersTitle = document.createElement("h3");
               usersTitle.innerText = "Users";
 
-              div.appendChild(usersTitle);
+              
 
               let table = document.createElement("table");
               table.classList = "styled-table";
@@ -393,7 +392,7 @@ function updateUsers() {
               });
 
               table.appendChild(tbod);
-              div.appendChild(table);
+              
 
               let groupsTitle = document.createElement("h3");
               groupsTitle.innerText = "Groups";
@@ -417,7 +416,7 @@ function updateUsers() {
                 let dataRow = document.createElement("tr");
 
                 let name = document.createElement("td");
-                name.innerText = row.name;
+                name.innerHTML = `<a href="https://app.split.io/org/${ORG}/ws/${ws.data.objects[0].id}/admin/groups/details/${row.id}/" target="_blank" rel="noopener noreferrer"> ${row.name} </a>`;
                 dataRow.appendChild(name);
 
                 let desc = document.createElement("td");
@@ -429,11 +428,19 @@ function updateUsers() {
 
               groupTable.appendChild(groupTbod);
               div.appendChild(groupTable);
+
+              // users come after the groups
+              div.appendChild(usersTitle);
+              div.appendChild(table);
             })
         );
       })
   );
 }
+    )
+  )
+}
+
 
 function updateCR() {
   let requestOptions = {
@@ -525,10 +532,10 @@ function updateCR() {
                           dataRow.appendChild(type);
 
                           let name = document.createElement("td");
-                          name.innerText =
+                          name.innerHTML =
                             typeOfRow == "Split"
-                              ? row.split.name
-                              : row.segment.name;
+                              ? `<a href="https://app.split.io/org/${ORG}/ws/${ws.id}/splits/${row.split.id}/env/${env.id}/changeRequest/${row.id}/" target="_blank" rel="noopener noreferrer"> ${row.split.name} </a>`
+                              : `<a href="https://app.split.io/org/${ORG}/ws/${ws.id}/splits/${row.segment.id}/env/${env.id}/changeRequest/${row.id}/" target="_blank" rel="noopener noreferrer"> ${row.segment.name} </a>`;
                           dataRow.appendChild(name);
 
                           let op = document.createElement("td");
@@ -639,10 +646,10 @@ function updateSegments() {
 					let tbod = document.createElement("tbody");
 					res.data.objects.forEach((row) => {
 					  let dataRow = document.createElement("tr");
-  
 					  let name = document.createElement("td");
-					  name.innerText = row.name;
-					  dataRow.appendChild(name);
+					  name.innerHTML = name.innerHTML = `<a href="https://app.split.io/org/${ORG}/ws/${ws.id}/segments/" target="_blank" rel="noopener noreferrer"> ${row.name} </a>`;
+					  //name.inner
+            dataRow.appendChild(name);
   
 					  let desc = document.createElement("td");
 					  desc.innerText = row.description;

@@ -6,7 +6,7 @@ const app = express();
 const https = require("https");
 
 const ADMIN_API_KEY = enVars.API_KEY;
-
+const ORG_ID = enVars.ORG_ID;
 
 const DEBUG = false;
 
@@ -105,6 +105,42 @@ app.get("/splitDefs", (req, outRes) => {
     });
     req.end();
   });
+
+  app.get("/segmentDefs", (req, outRes) => {
+    let workspace =  req.query.workspace;
+    let offset =  req.query.offset;
+    let env =  req.query.environment;
+    var options = {
+      method: "GET",
+      hostname: "api.split.io",
+      path: `/internal/api/v2/segments/ws/${workspace}/environments/${env}?offset=${offset}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${ADMIN_API_KEY}`,
+      },
+      maxRedirects: 20,
+    };
+    if (DEBUG) {console.log(options.path)}
+    var req = https.request(options, function (res) {
+      var chunks = [];
+  
+      res.on("data", function (chunk) {
+        chunks.push(chunk);
+      });
+  
+      res.on("end", function (chunk) {
+        var body = Buffer.concat(chunks);
+        if ( DEBUG) {console.log(body.toString())};
+        outRes.send(JSON.parse(body.toString()));
+      });
+  
+      res.on("error", function (error) {
+        console.error(error);
+      });
+    });
+    req.end();
+  });
+
 
 app.get("/splits", (req, outRes) => {
     let workspace =  req.query.workspace;
@@ -353,9 +389,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", {org: ORG_ID});
 });
 
-app.listen(3000, () => {
-  console.log("server started on port 3000");
+app.listen(3500, () => {
+  console.log("server started on port 3500");
 });
