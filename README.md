@@ -3,17 +3,18 @@ Sample, Basic Split Dashboard
 
 
 ## Showing trafficTypes
-![image](https://user-images.githubusercontent.com/1207274/211422798-e72ee457-72b8-4d7c-b50e-33cb36cc83d4.png)
+![image](https://user-images.githubusercontent.com/1207274/211866665-fae520c1-b377-4e14-9805-ad7007b62479.png)
+
 
 
 
 ## Showing Segments
-![image](https://user-images.githubusercontent.com/1207274/211423001-0c18b68e-2854-47a4-85c5-47e46358aae6.png)
+![image](https://user-images.githubusercontent.com/1207274/211866735-8c00296b-4e5b-44d9-94cf-a4d7156927ac.png)
 
 
 Can be used to show basic information on splits, trafficTypes, segments, and change requests.
 
-To use, add your global admin api key to a .env file with the syntax `API_KEY=<api_key>` and the server side script will pick it up. 
+To use, add your global admin api key to a .env file with the syntax `API_KEY=<api_key>` and your organization id with `ORG_ID=<orgId>` the server side script will pick it up. 
 
 Install the packages with `npm install` and then run with `node index.js` and it will serve on port 3500
 
