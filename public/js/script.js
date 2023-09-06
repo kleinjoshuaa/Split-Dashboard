@@ -1,6 +1,19 @@
 
 updateSplits();
 
+async function getEnvs(workspace) {
+  let requestOptions = {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+    redirect: "follow",
+  };
+  let envs = await fetch(`/envs?&workspace=${workspace}`, requestOptions);
+  return envs.json();
+}
+
+
 
 function makeSelected(option) {
   hideSelected();
@@ -91,12 +104,12 @@ function updateSplits() {
         //console.log(res.status, res.data.objects);
         //console.log(JSON.stringify(res))
         let workspaces = res.data.objects;
-        workspaces.forEach((ws) => {
+        workspaces.forEach(async (ws) => {
           let requestOptions = {
             method: "GET",
             redirect: "follow",
           };
-
+          let envs = await getEnvs(ws.id)
           fetch(`/splits?workspace=${ws.id}&offset=0`, requestOptions).then(
             (response) =>
               response
@@ -133,6 +146,7 @@ function updateSplits() {
                     "RolloutStatus",
                     "Tags",
                     "TrafficType",
+                    "Kill or Restore"
                   ];
                   h.forEach((v) => {
                     let headElem = document.createElement("th");
@@ -171,6 +185,18 @@ function updateSplits() {
                     tt.innerText = row.trafficType.name;
                     dataRow.appendChild(tt);
 
+                    let killAndRestore = document.createElement("td");
+                    let buttonsHTML = '';
+                    for (let envsIdx = 0; envsIdx < envs.length; envsIdx++) {
+                      let env = envs[envsIdx];
+
+                      buttonsHTML +=  `<tr><td> <button class="red-button" onclick="handleKillClick('${ws.id}','${env.id}','${row.name}')">Kill in ${env.name}</button> </td>
+                      <td><button class="green-button" onclick="handleRestoreClick('${ws.id}','${env.id}','${row.name}')">Restore in ${env.name}</button></td></tr>`;
+
+                    }
+                    killAndRestore.innerHTML = buttonsHTML;
+                    dataRow.appendChild(killAndRestore);
+
                     tbod.appendChild(dataRow);
                   });
                   table.appendChild(tbod);
@@ -181,6 +207,58 @@ function updateSplits() {
       })
   );
 }
+
+function handleKillClick(ws,env,flagName) {
+  // Replace this with your API call logic for "Kill" action
+  // Example API call using fetch:
+  fetch(`/killFlag?workspace=${ws}&env=${env}&flagName=${flagName}`, {
+      method: 'PUT', // or 'GET' or 'PUT', etc.
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      // Add any request body data if needed
+      body: ''
+  })
+  .then(response => {return response.json()}).then(json => {
+      // Handle the API response here
+      if (json.code == null) {
+          alert('Kill action was successful.');
+      } else {
+          alert('Kill action failed.\r\n'+JSON.stringify(json));
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+      alert('An error occurred while processing the Kill action.');
+  });
+}
+
+// Function to handle the "Restore" button click event
+function handleRestoreClick(ws,env,flagName) {
+  // Replace this with your API call logic for "Restore" action
+  // Example API call using fetch:
+  fetch(`/restoreFlag?workspace=${ws}&env=${env}&flagName=${flagName}`, {
+      method: 'PUT', // or 'GET' or 'PUT', etc.
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      // Add any request body data if needed
+      body: ''
+  })
+  .then(response => {return response.json()}).then(json => {
+    // Handle the API response here
+    if (json.code == null) {
+        alert('Restore action was successful.');
+    } else {
+        alert('Restore action failed.\r\n'+JSON.stringify(json));
+    }
+})
+  .catch(error => {
+      console.error('Error:', error);
+      alert('An error occurred while processing the Restore action.');
+  });
+}
+
 
 function updateTT() {
   let requestOptions = {

@@ -382,6 +382,77 @@ app.get("/splits", (req, outRes) => {
   });
 
 
+  app.put("/killFlag", (req, outRes) => {
+    let workspace = req.query.workspace
+    let env= req.query.env;
+    let flagName = req.query.flagName
+    var options = {
+      method: "PUT",
+      hostname: "api.split.io",
+      path:  `/internal/api/v2/splits/ws/${workspace}/${flagName}/environments/${env}/kill`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${ADMIN_API_KEY}`,
+      },
+      maxRedirects: 20,
+    };
+    if (DEBUG) { console.log(options.path)};
+    var req = https.request(options, function (res) {
+      var chunks = [];
+  
+      res.on("data", function (chunk) {
+        chunks.push(chunk);
+      });
+  
+      res.on("end", function (chunk) {
+        var body = Buffer.concat(chunks);
+        if (DEBUG) { console.log(body.toString())};
+        outRes.send(JSON.parse(body.toString()));
+      });
+  
+      res.on("error", function (error) {
+        console.error(error);
+      });
+    });
+    req.end();
+  });
+
+  app.put("/restoreFlag", (req, outRes) => {
+    let workspace = req.query.workspace
+    let env= req.query.env;
+    let flagName = req.query.flagName
+    var options = {
+      method: "PUT",
+      hostname: "api.split.io",
+      path:  `/internal/api/v2/splits/ws/${workspace}/${flagName}/environments/${env}/restore`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${ADMIN_API_KEY}`,
+      },
+      maxRedirects: 20,
+    };
+    if (DEBUG) { console.log(options.path)};
+    var req = https.request(options, function (res) {
+      var chunks = [];
+  
+      res.on("data", function (chunk) {
+        chunks.push(chunk);
+      });
+  
+      res.on("end", function (chunk) {
+        var body = Buffer.concat(chunks);
+        if (DEBUG) { console.log(body.toString())};
+        outRes.send(JSON.parse(body.toString()));
+      });
+  
+      res.on("error", function (error) {
+        console.error(error);
+      });
+    });
+    req.end();
+  });
+
+
 app.set("view engine", "ejs");
 
 app.use(bodyParser.urlencoded({ extended: false }));
