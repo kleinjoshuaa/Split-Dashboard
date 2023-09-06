@@ -12,7 +12,7 @@ Sample, Basic Split Dashboard
 ![image](https://user-images.githubusercontent.com/1207274/211866735-8c00296b-4e5b-44d9-94cf-a4d7156927ac.png)
 
 
-Can be used to show basic information on splits, trafficTypes, segments, and change requests.
+Can be used to show basic information on flags, trafficTypes, segments, and change requests.
 
 To use, add your global admin api key to a .env file with the syntax `API_KEY=<api_key>` and your organization id with `ORG_ID=<orgId>` the server side script will pick it up. 
 
