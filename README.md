@@ -24,11 +24,10 @@ This is a starting point - some enhancements will be left as exercises for the r
   3. Augment segments with segment definition information
   3. Could make the tables collapsable, scrollable, sortable, searchable
   4. Implement exponential backoff for api requests as to not trip the rate limiting
-  5. Add the ability to kill splits from this screen
-  6. Add a refresh button to refresh the data
-  7. Add tests
-  8. Add aggregate statistics (eg. - total numbers of splits, segments, users, Live splits in production, etc. )
-  9. Add server side caching of requests
+  5. Add a refresh button to refresh the data
+  6. Add tests
+  7. Add aggregate statistics (eg. - total numbers of splits, segments, users, Live splits in production, etc. )
+  8. Add server side caching of requests
   
  The above are just some ideas to expand upon this to make it useful for your use case. Enjoy!
   
